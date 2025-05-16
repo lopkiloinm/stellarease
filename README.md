@@ -44,19 +44,21 @@ We've harnessed the full power of the Stellar SDK to:
 
 Our wallet goes beyond traditional smart contract wallets by integrating programmable rules directly into the wallet creation process:
 
-#### Budget Control
-When creating a wallet with the passkey name `budget`, the smart contract enforces:
-- Daily spending limits (e.g., 100 XLM per day)
+#### Spending Limit Control
+When creating a wallet with the passkey name `spending_limit`, the smart contract enforces:
+- Maximum daily spending of 100 XLM
 - Transaction amount validation
-- Automatic rejection of transactions exceeding limits
-- Daily reset of spending allowances
+- Automatic rejection of transactions exceeding the limit
+- Daily reset of spending allowance
+- Perfect for controlled spending or shared accounts
 
-#### Allowance Management
-When using the passkey name `allowance`, the smart contract provides:
-- Granular control over transaction amounts
-- Time-based spending restrictions
-- Category-based spending limits
-- Automatic transaction validation
+#### Earning Limit Control
+When using the passkey name `earning_limit`, the smart contract provides:
+- Maximum daily incoming transactions of 100 XLM
+- Automatic rejection of incoming payments exceeding the limit
+- Daily reset of earning allowance
+- Ideal for receiving payments or managing income streams
+- Protection against unexpected large deposits
 
 ### Wallet Setup Flow Comparison
 

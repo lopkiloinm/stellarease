@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
 
-members = ["smart-wallet", "smart-wallet-interface", "example-contract", "sample-policy"]
+members = ["smart-wallet", "smart-wallet-interface", "example-contract", "sample-policy", "spending-policy", "earning-policy"]
 
 [workspace.dependencies]
 soroban-sdk = "22"
