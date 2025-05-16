@@ -37,12 +37,8 @@ yarn-error.log*
 next-env.d.ts
 
 #zephyr
-zephyr/
-
-contracts/
-
+zephyr/*
 target/*
-
 docs-scraper/*
 
 # misc
