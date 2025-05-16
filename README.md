@@ -4,6 +4,35 @@
 
 Welcome to our revolutionary Smart Wallet implementation! We're not just building another wallet - we're redefining what it means to interact with blockchain technology. By leveraging cutting-edge technologies like passkeys and smart contracts, we've created a solution that bridges the gap between traditional wallets and the future of Web3.
 
+### 🎥 Quick Demo
+https://111test.s3.cubbit.eu/stellareaseshort.mp4
+
+### ✨ Key Features
+
+#### 💰 Asset Management
+![Asset Dashboard](https://111test.s3.cubbit.eu/img2.png)
+Our intuitive dashboard provides a clear overview of your assets with rich, interactive cards showing real-time balances and market data. Manage multiple assets seamlessly in one place.
+
+#### 💱 Easy Token Operations
+![Buy XLM](https://111test.s3.cubbit.eu/img1.png)
+Purchase XLM directly with USD through our integrated exchange interface, making it easy to get started with Stellar.
+
+#### 👥 Contact Management
+![Contacts](https://111test.s3.cubbit.eu/img3.png)
+Store and manage your frequently used contacts for quick and easy transactions. Our contact system makes sending assets as simple as traditional banking apps.
+
+#### 📊 Transaction History
+![Transactions](https://111test.s3.cubbit.eu/img4.png)
+Track all your transactions with detailed history and status updates. Monitor your spending and earning patterns with our comprehensive transaction view.
+
+#### 📱 Receive Assets
+![Receive Assets](https://111test.s3.cubbit.eu/img5.png)
+Share your wallet address easily with options to copy the contract ID or download a QR code. Perfect for both in-person and remote transactions.
+
+#### 💸 Send Assets
+![Send Assets](https://111test.s3.cubbit.eu/img6.png)
+Send assets to your contacts with a familiar, banking-style interface. Select recipients from your contact book and specify amounts with ease.
+
 ## 💡 The Problem
 
 Traditional wallets face significant challenges:
@@ -98,6 +127,25 @@ graph TD
 - **React Hooks**: Reusable, maintainable code structure
 - **TypeScript Components**: Type-safe implementation throughout
 - **Smart Contract Integration**: Seamless interaction with programmable rules
+
+### Smart Contract Deployment
+The smart wallet and its two policy types (spending limits and earning limits) have been compiled into WebAssembly for optimal performance and security. To interact with these contracts, you'll need:
+
+1. **Required JWTs**:
+   - LaunchTube JWT for smart contract deployment
+   - Mercury JWT for RPC interaction
+
+2. **Stellar Network Configuration**:
+   - Network: Stellar
+   - Horizon URL: https://horizon.stellar.org
+   - Network Passphrase: Public Global Stellar Network ; September 2015
+   - RPC Endpoint: https://soroban-rpc.stellar.org
+
+3. **Contract Generation**:
+   - Smart wallet and policy contracts are dynamically generated during the passkey signing process
+   - Each wallet creation with a passkey automatically deploys the appropriate smart contract
+   - Contract addresses are unique per wallet and are generated based on the passkey signature
+   - No manual contract deployment or address management required
 
 ## 🌈 What Makes Us Different?
 

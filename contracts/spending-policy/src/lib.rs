@@ -7,7 +7,9 @@ use soroban_sdk::{
     TryFromVal, Vec, Map, Symbol, storage::Storage,
 };
 
-const DAILY_LIMIT: i128 = 100_000_000; // 100 XLM in stroops
+// Daily spending limit of 100 XLM (in stroops)
+const DAILY_LIMIT: i128 = 100_000_000;
+// Required passkey name for spending authorization
 const REQUIRED_PASSKEY_NAME: &str = "spending_limit";
 
 #[contracterror]
@@ -25,7 +27,7 @@ pub struct Contract;
 #[contractimpl]
 impl PolicyInterface for Contract {
     fn policy__(env: Env, _source: Address, signer: SignerKey, contexts: Vec<Context>) {
-        // Check if the passkey name matches the required name
+        // Verify the signer has the correct passkey name for spending authorization
         if let SignerKey::Ed25519(key) = signer {
             let passkey_name: Option<Symbol> = env.storage().instance().get(&key);
             if passkey_name != Some(Symbol::new(&env, REQUIRED_PASSKEY_NAME)) {
@@ -35,29 +37,30 @@ impl PolicyInterface for Contract {
             return; // Skip policy check for non-Ed25519 signers
         }
 
-        // Get the current day's timestamp (rounded to start of day)
+        // Calculate current day's timestamp for daily limit tracking
         let current_day = env.ledger().timestamp() / 86400;
         
-        // Get or initialize the daily spending map
+        // Initialize or retrieve daily spending tracking map
         let spending_key = Symbol::new(&env, "daily_spending");
         let mut daily_spending: Map<u64, i128> = env.storage().instance().get(&spending_key)
             .unwrap_or_else(|| Map::new(&env));
         
-        // Get current day's spending
+        // Get current day's accumulated spending
         let current_spending = daily_spending.get(current_day).unwrap_or(0);
         
+        // Process each context to enforce spending limits
         for context in contexts.iter() {
             match context {
                 Context::Contract(ContractContext { fn_name, args, .. }) => {
                     if fn_name == symbol_short!("transfer") {
                         if let Some(amount_val) = args.get(2) {
                             if let Ok(amount) = i128::try_from_val(&env, &amount_val) {
-                                // Check if this transaction would exceed the daily limit
+                                // Enforce daily spending limit
                                 if current_spending + amount > DAILY_LIMIT {
                                     panic_with_error!(&env, Error::SpendingLimitExceeded)
                                 }
                                 
-                                // Update the daily spending
+                                // Update daily spending tracking
                                 daily_spending.set(current_day, current_spending + amount);
                                 env.storage().instance().set(&spending_key, &daily_spending);
                             }
