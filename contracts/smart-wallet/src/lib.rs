@@ -32,10 +32,26 @@ pub struct Contract;
 
 const EVENT_TAG: Symbol = symbol_short!("sw_v1");
 const INITIALIZED: Symbol = symbol_short!("init");
+const PK_NAME: Symbol = symbol_short!("pk_name");
+const PK_TYPE: Symbol = symbol_short!("pk_type");
 
 #[contractimpl]
 impl SmartWalletInterface for Contract {
     fn __constructor(env: Env, signer: Signer) {
+        // Store the passkey name and type from the environment
+        if let Some(passkey_name) = env.storage().instance().get::<Symbol, Symbol>(&PK_NAME) {
+            let (signer_key, _, _) = process_signer(signer.clone());
+            // Store the passkey name for the signer
+            if let SignerKey::Ed25519(key) = &signer_key {
+                env.storage().instance().set(&key, &passkey_name);
+                
+                // Store the passkey type (spending or earning)
+                if let Some(passkey_type) = env.storage().instance().get::<Symbol, Symbol>(&PK_TYPE) {
+                    let type_key = Symbol::new(&env, "pk_type");
+                    env.storage().instance().set(&type_key, &passkey_type);
+                }
+            }
+        }
         Self::add_signer(env, signer);
     }
     fn add_signer(env: Env, signer: Signer) {
@@ -54,6 +70,19 @@ impl SmartWalletInterface for Contract {
 
         let (signer_key, signer_val, signer_storage) = process_signer(signer);
 
+        // Store the passkey name and type for the signer if they exist
+        if let Some(passkey_name) = env.storage().instance().get::<Symbol, Symbol>(&PK_NAME) {
+            if let SignerKey::Ed25519(key) = &signer_key {
+                env.storage().instance().set(&key, &passkey_name);
+                
+                // Store the passkey type (spending or earning)
+                if let Some(passkey_type) = env.storage().instance().get::<Symbol, Symbol>(&PK_TYPE) {
+                    let type_key = Symbol::new(&env, "pk_type");
+                    env.storage().instance().set(&type_key, &passkey_type);
+                }
+            }
+        }
+
         store_signer(&env, &signer_key, &signer_val, &signer_storage, false);
 
         extend_instance(&env);
@@ -67,6 +96,13 @@ impl SmartWalletInterface for Contract {
         env.current_contract_address().require_auth();
 
         let (signer_key, signer_val, signer_storage) = process_signer(signer);
+
+        // Update the passkey name if it's an Ed25519 signer
+        if let SignerKey::Ed25519(key) = &signer_key {
+            if let Some(passkey_name) = env.storage().instance().get::<Symbol, Symbol>(&PK_NAME) {
+                env.storage().instance().set(key, &passkey_name);
+            }
+        }
 
         store_signer(&env, &signer_key, &signer_val, &signer_storage, true);
 

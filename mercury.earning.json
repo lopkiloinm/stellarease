@@ -6,12 +6,12 @@
     "path": "./out/smart_wallet.optimized.wasm"
   },
   "passkey": {
-    "name": "spending_limit",
-    "description": "Smart wallet with spending limit policy"
+    "name": "earning_limit",
+    "description": "Smart wallet with earning limit policy"
   },
   "environment": {
-    "pk_name": "spending_limit",
-    "pk_type": "spending"
+    "pk_name": "earning_limit",
+    "pk_type": "earning"
   },
   "functions": [
     {
