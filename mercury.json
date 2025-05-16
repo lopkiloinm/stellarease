@@ -1,0 +1,30 @@
+{
+  "name": "smart-wallets-next",
+  "version": "0.1.0",
+  "description": "Smart wallet with passkey authentication",
+  "wasm": {
+    "path": "./smart_wallet.optimized.wasm"
+  },
+  "functions": [
+    {
+      "name": "add_signer",
+      "description": "Add a new signer to the wallet"
+    },
+    {
+      "name": "update_signer",
+      "description": "Update an existing signer"
+    },
+    {
+      "name": "remove_signer",
+      "description": "Remove a signer from the wallet"
+    },
+    {
+      "name": "update_contract_code",
+      "description": "Update the contract code"
+    },
+    {
+      "name": "__check_auth",
+      "description": "Check authentication"
+    }
+  ]
+} 
