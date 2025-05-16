@@ -5,7 +5,10 @@
 Welcome to our revolutionary Smart Wallet implementation! We're not just building another wallet - we're redefining what it means to interact with blockchain technology. By leveraging cutting-edge technologies like passkeys and smart contracts, we've created a solution that bridges the gap between traditional wallets and the future of Web3.
 
 ### 🎥 Quick Demo
-(https://111test.s3.cubbit.eu/stellareaseshort.mp4)
+<video width="600" controls>
+  <source src="https://111test.s3.cubbit.eu/stellareaseshort.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ### ✨ Key Features
 
